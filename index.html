@@ -709,6 +709,12 @@
             transform: translateX(-50%);
             animation: scroll 1.5s infinite;
         }
+        @media (max-width: 768px) {
+  .scroll-indicator {
+    bottom: 50px !important; /* Increased from 20px */
+    transform: translateX(-50%) translateY(0) !important;
+  }
+}
         /* Add to global styles */
 body {
   -webkit-user-select: none; /* Safari */
@@ -1384,7 +1390,34 @@ body {
     box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     background: var(--green-dark);
 }
+/* mobile centralization */
+@media (max-width: 768px) {
+  /* Album Carousel Fixes */
+  .album-carousel {
+    justify-content: flex-start;
+    padding: 0 10px 15px;
+    margin: 0 -10px; /* Bleed to edges */
+  }
+  
+  .album {
+    min-width: 140px !important;
+    margin: 0 5px;
+    scroll-snap-align: center;
+  }
 
+  /* Vinyl Positioning */
+  .vinyl-container {
+    transform: scale(0.8) translate(-50%, -50%);
+    top: 45% !important;
+  }
+
+  /* Equalizer Positioning */
+  .equalizer {
+    top: 20px !important;
+    right: 20px !important;
+    transform: scale(0.8);
+  }
+}
 /* Responsive Styles */
 @media (max-width: 992px) {
     .panel-container {
@@ -1781,6 +1814,21 @@ body {
   }
   .spice-card:first-child {
     grid-column: span 2; /* First card takes full width */
+  }
+}
+/* Update the mobile grid for 5 spices */
+@media (max-width: 768px) {
+  .spice-grid {
+    grid-template-columns: repeat(3, 1fr) !important; /* 3 columns */
+  }
+  .spice-card:first-child {
+    grid-column: span 3; /* First card takes full width */
+  }
+  .spice-card:nth-child(2),
+  .spice-card:nth-child(3),
+  .spice-card:nth-child(4),
+  .spice-card:nth-child(5) {
+    grid-column: span 1; /* Others take 1 column */
   }
 }
 /* Dish Gallery */
@@ -3192,6 +3240,17 @@ body {
                         </div>
                     </div>
                 </div>
+                <div class="spice-card" data-spice="mustard">
+                     <div class="spice-jar">
+                        <div class="spice-powder" style="background-color: #FFDB58;"></div>
+                        <div class="spice-label">Mustard</div>
+                        <div class="spice-details">
+                             <h4>Mustard Seeds</h4>
+                              <p>Pungent • Nutty • Sharp</p>
+                              <p>Essential for tempering and pickling. Adds a sharp kick to dishes.</p>
+                         </div>
+                      </div>
+                </div>
             </div>
         </div>
     </div>
@@ -3621,7 +3680,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fixed Cuisine Section Interactivity
 function initCuisineSection() {
     // Map Region Interaction
-    const regions = document.querySelectorAll('.map-region');
+    const regions = [
+  { class: 'north', id: 'north', left: '35%', top: '25%' },
+  { class: 'south', id: 'south', left: '35%', bottom: '15%' },
+  { class: 'east', id: 'east', left: '10%', top: '40%' },  // Now properly east
+  { class: 'west', id: 'west', right: '10%', top: '40%' }   // Now properly west
+];
     const infoContents = document.querySelectorAll('.info-content');
 
     // Initially hide all info contents except the first one
@@ -3631,9 +3695,13 @@ function initCuisineSection() {
     document.getElementById('north-info').classList.add('active');
     
     regions.forEach(region => {
-        region.addEventListener('click', function(e) {
-            e.preventDefault();
-            const regionId = this.getAttribute('data-region');
+        const el = document.querySelector(`.map-region.${region.class}`);
+  if (region.left) el.style.left = region.left;
+  if (region.right) el.style.right = region.right;
+  if (region.top) el.style.top = region.top;
+  if (region.bottom) el.style.bottom = region.bottom;
+  el.setAttribute('data-region', region.id);
+});
             
             // Hide all info contents
             infoContents.forEach(content => {
