@@ -709,7 +709,13 @@
             transform: translateX(-50%);
             animation: scroll 1.5s infinite;
         }
-
+        /* Add to global styles */
+body {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE/Edge */
+  user-select: none; /* Standard */
+}
         /* Footer Styles */
 .footer {
     background: linear-gradient(135deg, var(--green-dark), #1a3a1a);
@@ -900,7 +906,18 @@
 .team-links a:hover::after {
     width: 100%;
 }
-
+@media (max-width: 768px) {
+  .team-links {
+    flex-direction: row !important; /* Horizontal layout */
+    flex-wrap: wrap; /* Allow wrapping */
+    justify-content: center;
+    gap: 10px 15px !important;
+  }
+  .team-links span {
+    margin-bottom: 0 !important;
+    margin-right: 10px !important;
+  }
+}
 /* Responsive */
 @media (max-width: 768px) {
     .footer-content {
@@ -1408,7 +1425,19 @@
         height: 80px;
     }
 }
-
+@media (max-width: 768px) {
+  .album-carousel {
+    display: flex !important; /* Force show */
+    overflow-x: auto; /* Horizontal scroll */
+    gap: 10px;
+    padding-bottom: 15px; /* Space for scroll */
+  }
+  .album {
+    min-width: 120px !important; /* Prevent shrinking */
+    height: 120px !important;
+    flex-shrink: 0; /* Prevent squeezing */
+  }
+}
 /* Cuisine Section Styles */
 .cuisine-section {
     background: #f1d2a3;
@@ -1620,7 +1649,15 @@
     text-align: left;
     line-height: 1.7;
 }
-
+@media (max-width: 768px) {
+  .map-info-box {
+    margin-top: 20px !important; /* Reduce gap */
+    position: static !important; /* Remove absolute positioning */
+  }
+  .india-map-wrapper {
+    padding-bottom: 20px; /* Add spacing below map */
+  }
+}
 /* Spice Experience */
 .spice-experience {
     background: linear-gradient(to bottom, #fff9f0, #f5e6d0);
@@ -1733,7 +1770,19 @@
     font-style: italic;
     color: var(--navy);
 }
-
+@media (max-width: 768px) {
+  .spice-grid {
+    grid-template-columns: 1fr 1fr !important; /* 2 columns */
+    gap: 15px !important;
+  }
+  .spice-jar {
+    width: 100% !important; /* Full width */
+    height: 160px !important; /* Consistent height */
+  }
+  .spice-card:first-child {
+    grid-column: span 2; /* First card takes full width */
+  }
+}
 /* Dish Gallery */
 .dish-gallery {
     display: grid;
@@ -1992,6 +2041,19 @@
                 font-size: 1.2rem;
             }
         }
+        @media (max-width: 768px) {
+  .timeline-item {
+    padding-left: 80px !important; /* More space for dates */
+  }
+  .timeline-year {
+    left: 10px !important; /* Position dates closer */
+    right: auto !important;
+    top: 20px !important;
+  }
+  .timeline::before {
+    left: 40px !important; /* Adjust timeline line */
+  }
+}
         /* Center buttons in cinema cards */
     .card .btn-outline {
         display: block;
@@ -2152,7 +2214,17 @@
             height: 40px;
             font-size: 1.2rem;
         }
-    }
+        /* Scroll fix CSS */
+        @media (max-width: 768px) {
+  .scroll-indicator {
+    left: 50% !important; /* Center horizontally */
+    bottom: 20px !important; /* Raise above content */
+    transform: translateX(-50%) !important;
+  }
+  .hero-content {
+    padding-bottom: 60px; /* Prevent clipping */
+  }
+}
     </style>
 </head>
 <body>
