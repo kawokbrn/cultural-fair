@@ -439,78 +439,100 @@
             line-height: 1.6;
         }
 
-        /* Timeline section */
-        .timeline {
-            position: relative;
-            max-width: 900px;
-            margin: 50px auto;
-        }
+        /* Timeline Styles */
+.timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 50px auto;
+}
 
-        .timeline::before {
-            content: '';
-            position: absolute;
-            width: 6px;
-            background: linear-gradient(to bottom, var(--saffron), var(--green));
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -3px;
-            border-radius: 3px;
-            box-shadow: 0 0 10px rgba(255, 153, 51, 0.3);
-        }
+.timeline::before {
+    content: '';
+    position: absolute;
+    width: 6px;
+    background: linear-gradient(to bottom, var(--saffron), var(--green));
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -3px;
+    border-radius: 3px;
+}
 
-        .timeline-item {
-            padding: 20px 40px;
-            position: relative;
-            width: 50%;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: var(--transition);
-        }
+.timeline-item {
+    padding: 20px 40px;
+    position: relative;
+    width: 50%;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: var(--transition);
+}
 
-        .timeline-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+.timeline-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 
-        .timeline-item:nth-child(odd) {
-            left: 0;
-        }
+.timeline-item:nth-child(odd) {
+    left: 0;
+}
 
-        .timeline-item:nth-child(even) {
-            left: 50%;
-        }
+.timeline-item:nth-child(even) {
+    left: 50%;
+}
 
-        .timeline-content {
-            padding: 30px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            position: relative;
-            border: 1px solid rgba(19, 136, 8, 0.2);
-        }
+.timeline-content {
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    position: relative;
+    border: 1px solid rgba(19,136,8,0.2);
+}
 
-        .timeline-year {
-            position: absolute;
-            top: 30px;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--saffron);
-            z-index: 1;
-            background: white;
-            padding: 5px 15px;
-            border-radius: 30px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            border: 2px solid var(--saffron);
-        }
+.timeline-year {
+    position: absolute;
+    top: 30px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--saffron);
+    z-index: 1;
+    background: white;
+    padding: 5px 15px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    border: 2px solid var(--saffron);
+}
 
-        .timeline-item:nth-child(odd) .timeline-year {
-            right: -80px;
-        }
+.timeline-item:nth-child(odd) .timeline-year {
+    right: -80px;
+}
 
-        .timeline-item:nth-child(even) .timeline-year {
-            left: -80px;
-        }
+.timeline-item:nth-child(even) .timeline-year {
+    left: -80px;
+}
+
+/* Mobile Timeline */
+@media (max-width: 768px) {
+    .timeline::before {
+        left: 31px;
+    }
+    
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+    
+    .timeline-item:nth-child(even) {
+        left: 0;
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-year,
+    .timeline-item:nth-child(even) .timeline-year {
+        left: 15px;
+        right: auto;
+    }
+}
 
         /* Cards section */
         .card-grid {
@@ -1269,6 +1291,8 @@ body {
     gap: 20px;
     padding: 20px;
     z-index: 3;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
 }
 
 .album {
@@ -1280,6 +1304,8 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    flex-shrink: 0;
+    scroll-snap-align: center;
 }
 
 .album:hover {
@@ -1392,25 +1418,23 @@ body {
 }
 /* mobile centralization */
 @media (max-width: 768px) {
-  /* Album Carousel Fixes */
-  .album-carousel {
-    justify-content: flex-start;
-    padding: 0 10px 15px;
-    margin: 0 -10px; /* Bleed to edges */
-  }
-  
-  .album {
-    min-width: 140px !important;
-    margin: 0 5px;
-    scroll-snap-align: center;
-  }
-
-  /* Vinyl Positioning */
-  .vinyl-container {
-    transform: scale(0.8) translate(-50%, -50%);
-    top: 45% !important;
-  }
-
+    .album-carousel {
+        justify-content: flex-start;
+        padding: 20px 10px;
+        margin: 0 -10px;
+    }
+    
+    .album {
+        width: 100px;
+        height: 100px;
+        margin: 0 10px;
+    }
+    
+    .vinyl-container {
+        top: 40% !important;
+        transform: translate(-50%, -50%) scale(0.7);
+    }
+}
   /* Equalizer Positioning */
   .equalizer {
     top: 20px !important;
@@ -1577,7 +1601,7 @@ body {
     position: relative;
     width: 100%;
     height: 0;
-    padding-bottom: 120%; /* Maintain aspect ratio */
+    padding-bottom: 120%;
 }
 
 .map-image {
@@ -1595,7 +1619,6 @@ body {
     transition: all 0.3s ease;
     opacity: 0.3;
     border-radius: 50%;
-    transform: scale(1);
 }
 
 .map-region:hover {
@@ -1691,6 +1714,25 @@ body {
     padding-bottom: 20px; /* Add spacing below map */
   }
 }
+    @media (max-width: 768px) {
+    .map-info-box {
+        margin-top: 20px;
+    }
+    
+    .map-region {
+        width: 40% !important;
+        height: 25% !important;
+    }
+    
+    .map-region.north {
+        top: 20% !important;
+        left: 30% !important;
+    }
+    
+    .map-region.south {
+        bottom: 10% !important;
+        left: 30% !important;
+    }
 /* Spice Experience */
 .spice-experience {
     background: linear-gradient(to bottom, #fff9f0, #f5e6d0);
@@ -1803,18 +1845,21 @@ body {
     font-style: italic;
     color: var(--navy);
 }
+/* Mobile Spice Grid */
 @media (max-width: 768px) {
-  .spice-grid {
-    grid-template-columns: 1fr 1fr !important; /* 2 columns */
-    gap: 15px !important;
-  }
-  .spice-jar {
-    width: 100% !important; /* Full width */
-    height: 160px !important; /* Consistent height */
-  }
-  .spice-card:first-child {
-    grid-column: span 2; /* First card takes full width */
-  }
+    .spice-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .spice-card:first-child {
+        grid-column: span 2;
+    }
+    
+    .spice-jar {
+        width: 140px;
+        height: 200px;
+    }
 }
 /* Update the mobile grid for 5 spices */
 @media (max-width: 768px) {
@@ -3465,23 +3510,23 @@ body {
         });
     });
         
-        // Timeline animation
-        document.addEventListener('DOMContentLoaded', function() {
-            const timelineItems = document.querySelectorAll('.timeline-item');
-            
-            function checkTimeline() {
-                timelineItems.forEach(item => {
-                    const position = item.getBoundingClientRect();
-                    if (position.top < window.innerHeight * 0.75) {
-                        item.classList.add('visible');
-                    }
-                });
+        // Timeline Animation
+document.addEventListener('DOMContentLoaded', function() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    
+    function checkTimeline() {
+        timelineItems.forEach(item => {
+            const position = item.getBoundingClientRect();
+            if (position.top < window.innerHeight * 0.75) {
+                item.classList.add('visible');
             }
-            
-            window.addEventListener('scroll', checkTimeline);
-            window.addEventListener('resize', checkTimeline);
-            checkTimeline();
         });
+    }
+    
+    window.addEventListener('scroll', checkTimeline);
+    window.addEventListener('resize', checkTimeline);
+    checkTimeline();
+});
 
 // Carousel functionality
 function initializeCarousels() {
@@ -3679,39 +3724,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Fixed Cuisine Section Interactivity
 function initCuisineSection() {
-    // Map Region Interaction
-    const regions = [
-  { class: 'north', id: 'north', left: '35%', top: '25%' },
-  { class: 'south', id: 'south', left: '35%', bottom: '15%' },
-  { class: 'east', id: 'east', left: '10%', top: '40%' },  // Now properly east
-  { class: 'west', id: 'west', right: '10%', top: '40%' }   // Now properly west
-];
+   document.addEventListener('DOMContentLoaded', function() {
+    const regions = document.querySelectorAll('.map-region');
     const infoContents = document.querySelectorAll('.info-content');
+       // Correct region positions
+    const regionPositions = {
+        north: { top: '25%', left: '35%' },
+        south: { bottom: '15%', left: '35%' },
+        east: { top: '40%', left: '10%' },  // Fixed east position
+        west: { top: '40%', right: '10%' }  // Fixed west position
+    };
 
-    // Initially hide all info contents except the first one
-    infoContents.forEach(content => {
-    content.classList.remove('active');
-    });
-    document.getElementById('north-info').classList.add('active');
-    
+    // Set initial positions
     regions.forEach(region => {
-        const el = document.querySelector(`.map-region.${region.class}`);
-  if (region.left) el.style.left = region.left;
-  if (region.right) el.style.right = region.right;
-  if (region.top) el.style.top = region.top;
-  if (region.bottom) el.style.bottom = region.bottom;
-  el.setAttribute('data-region', region.id);
-});
+        const regionId = region.getAttribute('data-region');
+        Object.assign(region.style, regionPositions[regionId]);
+    });
+    
+    // Click handler
+    regions.forEach(region => {
+        region.addEventListener('click', function(e) {
+            e.preventDefault();
+            const regionId = this.getAttribute('data-region');
             
-            // Hide all info contents
             infoContents.forEach(content => {
                 content.classList.remove('active');
             });
             
-            // Show selected info
             document.getElementById(`${regionId}-info`).classList.add('active');
             
-            // Visual feedback
             regions.forEach(r => {
                 r.style.opacity = '0.3';
                 r.style.transform = 'scale(1)';
@@ -3720,8 +3761,8 @@ function initCuisineSection() {
             this.style.transform = 'scale(1.1)';
         });
     });
+});
     
-
     // Spice Card Interaction
     const spiceCards = document.querySelectorAll('.spice-card');
     
