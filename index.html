@@ -36,6 +36,11 @@
             line-height: 1.7;
             overflow-x: hidden;
             position: relative;
+            /* Fix: Prevent text selection globally */
+            user-select: none; 
+            -webkit-user-select: none; 
+            -moz-user-select: none; 
+            -ms-user-select: none; 
         }
 
         body::before {
@@ -396,10 +401,6 @@
             transition: var(--transition);
             position: relative;
             overflow: hidden;
-            user-select: none; /* Fix: Prevent text selection */
-            -webkit-user-select: none; /* Safari */
-            -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* IE 10+ */
         }
 
         .stat-card::before {
@@ -470,10 +471,6 @@
             opacity: 0;
             transform: translateY(30px);
             transition: var(--transition);
-            user-select: none; /* Fix: Prevent text selection */
-            -webkit-user-select: none; /* Safari */
-            -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* IE 10+ */
         }
 
         .timeline-item.visible {
@@ -536,10 +533,6 @@
             transition: var(--transition);
             position: relative;
             border: 1px solid rgba(255, 153, 51, 0.2);
-            user-select: none; /* Fix: Prevent text selection */
-            -webkit-user-select: none; /* Safari */
-            -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* IE 10+ */
         }
 
         .card::before {
@@ -606,10 +599,6 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
-            user-select: none; /* Fix: Prevent text selection */
-            -webkit-user-select: none; /* Safari */
-            -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* IE 10+ */
         }
 
         .religion-card::before {
@@ -653,6 +642,7 @@
         .carousel-slide {
             min-width: 100%;
             height: 100%;
+            position: relative; /* Ensure child elements are positioned relative to slide */
         }
 
         .carousel-slide img {
@@ -687,8 +677,9 @@
         /* Scroll indicator */
         .scroll-indicator {
             position: absolute;
-            bottom: -130px;
-            left: 35%;
+            /* Fix: Adjusted to be closer to the bottom of hero-content box */
+            bottom: 30px; 
+            left: 50%; 
             transform: translateX(-50%);
             display: flex;
             flex-direction: column;
@@ -873,6 +864,18 @@
     filter: brightness(0) invert(1);
 }
 
+/* New GitHub button style */
+.github-btn {
+    background-color: #333;
+    color: white;
+}
+
+.github-btn:hover {
+    background-color: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+
 /* Team Links */
 .team-links {
     display: flex;
@@ -932,17 +935,17 @@
         gap: 10px 15px;
     }
     
-    /* Fix: Team links horizontal on mobile */
     .team-links {
-        flex-direction: row; /* Change to row */
-        justify-content: center; /* Center items */
+        flex-direction: row;
         align-items: center;
-        gap: 10px 15px; /* Adjust gap */
+        justify-content: center; 
+        flex-wrap: wrap; 
+        gap: 10px 15px;
     }
     
     .team-links span {
         margin-right: 0;
-        margin-bottom: 0; /* Remove bottom margin */
+        margin-bottom: 0;
     }
 }
         /* Modern Navigation Styles */
@@ -1261,17 +1264,26 @@
     left: 0;
     right: 0;
     display: flex;
-    justify-content: center; /* Fix: Center albums */
+    flex-wrap: nowrap; /* Fix: Ensure no wrapping, allow horizontal scroll */
+    justify-content: center; 
     gap: 20px;
     padding: 20px;
     z-index: 3;
-    overflow-x: auto; /* Allow horizontal scrolling if needed */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-    padding-bottom: 10px; /* Space for scrollbar */
+    overflow-x: scroll; /* Fix: Force scrollbar */
+    -webkit-overflow-scrolling: touch; 
+    padding-bottom: 10px; 
+    /* Fix: Hide scrollbar */
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For IE and Edge */
 }
 
+.album-carousel::-webkit-scrollbar { /* For Chrome, Safari, and Opera */
+    display: none;
+}
+
+
 .album {
-    flex-shrink: 0; /* Prevent shrinking */
+    flex-shrink: 0; 
     width: 120px;
     height: 120px;
     border-radius: 10px;
@@ -1426,15 +1438,48 @@
         gap: 15px;
     }
     
-    /* Fix: Albums visible on mobile */
+    /* Fix: Albums visible and less cropped on mobile */
     .album-carousel {
-        padding: 15px 10px; /* Adjust padding for smaller screens */
-        justify-content: flex-start; /* Align left for scroll */
+        width: 100%; 
+        padding: 15px 10px; 
+        justify-content: flex-start; 
+        box-sizing: border-box; 
     }
 
     .album {
-        width: 100px; /* Smaller size for mobile */
-        height: 100px;
+        width: 80px; /* Further reduced size for mobile to ensure visibility */
+        height: 80px;
+        margin: 0 5px; 
+    }
+
+    /* Fix: Vinyl and Equalizer placement on small screens */
+    .panel-visual {
+        min-height: 250px; /* Adjust min-height for content */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 120px; /* Make space for the carousel below */
+    }
+
+    .vinyl-container {
+        position: static; /* Remove absolute positioning to flow naturally */
+        transform: none; /* Remove transform */
+        margin-bottom: 20px;
+    }
+
+    .vinyl {
+        width: 150px; /* Smaller vinyl for mobile */
+        height: 150px;
+    }
+
+    .equalizer {
+        position: static; /* Remove absolute positioning */
+        transform: none; /* Remove transform */
+        margin-top: 20px;
+        width: 150px; /* Adjust size */
+        height: 80px;
+        order: -1; /* Place it above vinyl if needed */
     }
 }
 
@@ -1586,17 +1631,17 @@
     background: rgba(19, 136, 8, 0.3);
 }
 
-.map-region.east { /* Fix: Swap east and west positions */
+.map-region.east { 
     top: 40%;
-    right: 10%; /* Changed from left */
+    right: 10%; 
     width: 25%;
     height: 30%;
     background: rgba(0, 0, 128, 0.3);
 }
 
-.map-region.west { /* Fix: Swap east and west positions */
+.map-region.west { 
     top: 40%;
-    left: 10%; /* Changed from right */
+    left: 10%; 
     width: 25%;
     height: 30%;
     background: rgba(204, 0, 0, 0.3);
@@ -1675,16 +1720,12 @@
     gap: 40px;
     max-width: 1000px;
     margin: 0 auto;
-    justify-content: center; /* Center items when they wrap */
+    justify-content: center; 
 }
 
 .spice-card {
     text-align: center;
     transition: transform 0.3s ease;
-    user-select: none; /* Fix: Prevent text selection */
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE 10+ */
 }
 
 .spice-card:hover {
@@ -1699,7 +1740,7 @@
     background: white;
     border-radius: 10px 10px 0 0;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    overflow: hidden;
+    overflow: hidden; /* Ensure content inside the jar is clipped */
     transition: transform 0.3s ease;
 }
 
@@ -1727,15 +1768,22 @@
 
 .spice-details {
     position: absolute;
-    bottom: -100%;
-    left: 0;
-    right: 0;
+    top: 0; /* Align to the top of the jar */
+    left: 0; /* Start at the left of the jar */
+    width: 100%; /* Take full width of the jar */
+    height: 100%; /* Take full height of the jar */
     background: white;
     padding: 20px;
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 10px 10px; /* Keep consistent rounding for bottom */
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: bottom 0.4s ease;
+    transform: translateX(100%); /* Initially off to the right */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animate transform */
     z-index: 3;
+    display: flex; /* Use flex for content alignment */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Center horizontally within flex container */
+    text-align: center; /* Also center text content */
 }
 
 .spice-card:hover .spice-jar {
@@ -1746,8 +1794,9 @@
     height: 60%;
 }
 
-.spice-card:hover .spice-details {
-    bottom: 0;
+.spice-card:hover .spice-details, 
+.spice-card.active .spice-details { 
+    transform: translateX(0); /* Slide into view */
 }
 
 .spice-details h4 {
@@ -1841,10 +1890,6 @@
     font-weight: 600;
     min-width: 100px;
     text-align: center;
-    user-select: none; /* Fix: Prevent text selection */
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE 10+ */
 }
 
 .word:hover {
@@ -1912,18 +1957,16 @@
         left: 30% !important;
     }
     
-    /* Fix: Reduce distance between map and text */
     .map-info-box {
-        margin-top: 50px; /* Reduced margin */
+        margin-top: 50px; 
         position: static;
     }
     
-    /* Fix: Spice grid on mobile */
     .spice-grid {
-        grid-template-columns: 1fr 1fr; /* Maintain two columns */
+        grid-template-columns: 1fr 1fr; 
         gap: 20px;
-        max-width: 500px; /* Adjust max-width to help centering */
-        margin: 0 auto; /* Center the grid */
+        max-width: 500px; 
+        margin: 0 auto; 
     }
     
     .spice-jar {
@@ -1961,10 +2004,9 @@
 
         /* Responsive design */
         @media (max-width: 768px) {
-            /* Fix: Explore to scroll animation positioning */
             .scroll-indicator {
-                bottom: 20px; /* Adjust as needed to avoid clipping */
-                left: 50%; /* Center horizontally */
+                bottom: 80px; /* Adjusted position to prevent clipping */
+                left: 50%;
                 transform: translateX(-50%);
             }
 
@@ -1993,10 +2035,9 @@
                 left: 31px;
             }
             
-            /* Fix: Timeline dates overlapping text */
             .timeline-item {
                 width: 100%;
-                padding-left: 100px; /* Increased padding to move text right */
+                padding-left: 100px; 
                 padding-right: 25px;
             }
             
@@ -2912,10 +2953,8 @@
         <div class="container panel-container">
             <div class="panel-content">
                 <h3>Roots & Revolution</h3>
-                <div class="music-text">
-                    <p>Indian music boasts one of the world's oldest traditions, evolving through centuries while maintaining its spiritual core. From Vedic chants to contemporary fusions, the journey reflects India's cultural resilience.</p>
-                    <p>Modern artists like A.R. Rahman bridge eras, blending classical ragas with electronic beats, creating soundscapes that resonate globally while preserving indigenous musical DNA.</p>
-                </div>
+                <p class="music-text">Indian music boasts one of the world's oldest traditions, evolving through centuries while maintaining its spiritual core. From Vedic chants to contemporary fusions, the journey reflects India's cultural resilience.</p>
+                <p class="music-text">Modern artists like A.R. Rahman bridge eras, blending classical ragas with electronic beats, creating soundscapes that resonate globally while preserving indigenous musical DNA.</p>
                 <div class="music-stats">
                     <div class="stat">
                         <div class="stat-value">3,000+</div>
@@ -2995,10 +3034,8 @@
             </div>
             <div class="panel-content">
                 <h3>Modern Soundscapes</h3>
-                <div class="music-text">
-                    <p>The streaming revolution has unleashed a new wave of Indian artists blending languages and genres. Platforms like JioSaavn and Spotify have seen 85% market growth, creating space for experimental fusions.</p>
-                    <p>Artists like Prateek Kuhad and Armaan Malik craft bilingual hits that top global charts, proving Indian music's universal appeal while staying rooted in cultural authenticity.</p>
-                </div>
+                <p class="music-text">The streaming revolution has unleashed a new wave of Indian artists blending languages and genres. Platforms like JioSaavn and Spotify have seen 85% market growth, creating space for experimental fusions.</p>
+                <p class="music-text">Artists like Prateek Kuhad and Armaan Malik craft bilingual hits that top global charts, proving Indian music's universal appeal while staying rooted in cultural authenticity.</p>
                 <div class="music-stats">
                     <div class="stat">
                         <div class="stat-value">85%</div>
@@ -3168,7 +3205,7 @@
         <div class="gallery-item" style="background-image: url('https://cdn.zeptonow.com/production///tr:w-600,ar-100-100,pr-true,f-auto,q-80/web/recipes/chola-bhatura.png');">
             <div class="dish-info">
                 <h4>Chole Bhature</h4>
-                <p>Spiced chickpeas with puffed fried bread</p>
+            <p>Spiced chickpeas with puffed fried bread</p>
             </div>
         </div>
     </div>
@@ -3222,8 +3259,8 @@
 
     <div class="cuisine-cta">
         <div class="container">
-            <h3>Ready for a Taste of India?</h3>
-            <p>Visit our food stand to experience authentic smells and demonstrations</p>
+            <h3>Ready to Taste India?</h3>
+            <p>Visit our food stand to experience authentic flavors and cooking demonstrations</p>
             <a href="#contact" class="cta-button">Find Our Food Stall</a>
         </div>
     </div>
@@ -3252,8 +3289,8 @@
                     <span>भारत | India</span>
                 </div>
                 <div class="copyright">
-                    <p>© 2025 English Cultural Fair — Kachru Model Exhibition</p>
-                    <p>UFS — DLES Inglês | All Rights Reserved</p>
+                    <p>English Cultural Fair — Kachru Model Exhibition</p>
+                    <p>UFS — DLES Inglês | MIT License Copyright © 2025 Brandon</p>
                 </div>
             </div>
 
@@ -3267,16 +3304,21 @@
                     <img src="https://www.ufs.br/assets/ufs_logo-a0944b5a183b86aa53a3c556a603a228923f651bb4bd847c10086600a43cbda7.png" alt="University Logo" class="university-logo">
                     <span>University Portal</span>
                 </a>
+
+                <a href="https://github.com/kawokbrn" class="social-btn github-btn" target="_blank">
+                    <i class="fab fa-github"></i>
+                    <span>Dev's GitHub</span>
+                </a>
             </div>
         </div>
 
         <div class="team-links">
             <span>Team:</span>
-            <a href="https://instagram.com/b.kawo/" target="_blank">Dev & History: Brandon |</a>
-            <a href="https://instagram.com/erikbzra/" target="_blank"> Arts & Music: Erik |</a>
-            <a href="https://instagram.com/jessicalmeidas_/" target="_blank"> Cinema: Jéssica |</a>
-            <a href="https://instagram.com/karollinebbz/" target="_blank"> Arts & Architecture: Karolline |</a>
-            <a href="https://instagram.com/silvaa.raffa.15/" target="_blank"> Cuisine: Rafael</a>
+            <a href="https://instagram.com/b.kawo/" target="_blank">Brandon</a>
+            <a href="https://instagram.com/erikbzra/" target="_blank">Erik</a>
+            <a href="https://instagram.com/jessicalmeidas_/" target="_blank">Jéssica</a>
+            <a href="https://instagram.com/karollinebbz/" target="_blank">Karolline</a>
+            <a href="https://instagram.com/silvaa.raffa.15/" target="_blank">Rafael</a>
         </div>
     </div>
 </footer>
@@ -3526,7 +3568,8 @@ function initMusicSection() {
         const scrollWidth = carousel.scrollWidth - carousel.clientWidth;
         
         function autoScroll() {
-            scrollPos += direction * 0.5;
+            // Fix: Increase scroll speed
+            scrollPos += direction * 1.5; /* Changed from 0.5 to 1.5 for faster scrolling */
             
             if (scrollPos >= scrollWidth || scrollPos <= 0) {
                 direction *= -1;
@@ -3598,8 +3641,26 @@ function initCuisineSection() {
     spiceCards.forEach(card => {
         card.addEventListener('click', function(e) {
             e.preventDefault();
-            // Visual feedback handled by CSS
+            // Toggle active class on click for mobile
+            if (window.innerWidth <= 768) { 
+                // Close any open spice details first
+                document.querySelectorAll('.spice-card.active').forEach(openCard => {
+                    if (openCard !== card) { 
+                        openCard.classList.remove('active');
+                    }
+                });
+                card.classList.toggle('active');
+            }
         });
+    });
+
+    // Close spice details when clicking outside on mobile
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768 && !e.target.closest('.spice-card')) {
+            document.querySelectorAll('.spice-card.active').forEach(activeCard => {
+                activeCard.classList.remove('active');
+            });
+        }
     });
 
     // Activate first region by default
