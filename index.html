@@ -396,6 +396,10 @@
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            user-select: none; /* Fix: Prevent text selection */
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE 10+ */
         }
 
         .stat-card::before {
@@ -466,6 +470,10 @@
             opacity: 0;
             transform: translateY(30px);
             transition: var(--transition);
+            user-select: none; /* Fix: Prevent text selection */
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE 10+ */
         }
 
         .timeline-item.visible {
@@ -528,6 +536,10 @@
             transition: var(--transition);
             position: relative;
             border: 1px solid rgba(255, 153, 51, 0.2);
+            user-select: none; /* Fix: Prevent text selection */
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE 10+ */
         }
 
         .card::before {
@@ -594,6 +606,10 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
+            user-select: none; /* Fix: Prevent text selection */
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE 10+ */
         }
 
         .religion-card::before {
@@ -916,14 +932,17 @@
         gap: 10px 15px;
     }
     
+    /* Fix: Team links horizontal on mobile */
     .team-links {
-        flex-direction: column;
+        flex-direction: row; /* Change to row */
+        justify-content: center; /* Center items */
         align-items: center;
+        gap: 10px 15px; /* Adjust gap */
     }
     
     .team-links span {
         margin-right: 0;
-        margin-bottom: 5px;
+        margin-bottom: 0; /* Remove bottom margin */
     }
 }
         /* Modern Navigation Styles */
@@ -1242,13 +1261,17 @@
     left: 0;
     right: 0;
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Fix: Center albums */
     gap: 20px;
     padding: 20px;
     z-index: 3;
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    padding-bottom: 10px; /* Space for scrollbar */
 }
 
 .album {
+    flex-shrink: 0; /* Prevent shrinking */
     width: 120px;
     height: 120px;
     border-radius: 10px;
@@ -1403,9 +1426,15 @@
         gap: 15px;
     }
     
+    /* Fix: Albums visible on mobile */
+    .album-carousel {
+        padding: 15px 10px; /* Adjust padding for smaller screens */
+        justify-content: flex-start; /* Align left for scroll */
+    }
+
     .album {
-        width: 80px;
-        height: 80px;
+        width: 100px; /* Smaller size for mobile */
+        height: 100px;
     }
 }
 
@@ -1557,17 +1586,17 @@
     background: rgba(19, 136, 8, 0.3);
 }
 
-.map-region.east {
+.map-region.east { /* Fix: Swap east and west positions */
     top: 40%;
-    left: 10%;
+    right: 10%; /* Changed from left */
     width: 25%;
     height: 30%;
     background: rgba(0, 0, 128, 0.3);
 }
 
-.map-region.west {
+.map-region.west { /* Fix: Swap east and west positions */
     top: 40%;
-    right: 10%;
+    left: 10%; /* Changed from right */
     width: 25%;
     height: 30%;
     background: rgba(204, 0, 0, 0.3);
@@ -1646,11 +1675,16 @@
     gap: 40px;
     max-width: 1000px;
     margin: 0 auto;
+    justify-content: center; /* Center items when they wrap */
 }
 
 .spice-card {
     text-align: center;
     transition: transform 0.3s ease;
+    user-select: none; /* Fix: Prevent text selection */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE 10+ */
 }
 
 .spice-card:hover {
@@ -1807,6 +1841,10 @@
     font-weight: 600;
     min-width: 100px;
     text-align: center;
+    user-select: none; /* Fix: Prevent text selection */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE 10+ */
 }
 
 .word:hover {
@@ -1874,14 +1912,18 @@
         left: 30% !important;
     }
     
+    /* Fix: Reduce distance between map and text */
     .map-info-box {
+        margin-top: 50px; /* Reduced margin */
         position: static;
-        margin-top: 170px;
     }
     
+    /* Fix: Spice grid on mobile */
     .spice-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr; /* Maintain two columns */
         gap: 20px;
+        max-width: 500px; /* Adjust max-width to help centering */
+        margin: 0 auto; /* Center the grid */
     }
     
     .spice-jar {
@@ -1919,6 +1961,13 @@
 
         /* Responsive design */
         @media (max-width: 768px) {
+            /* Fix: Explore to scroll animation positioning */
+            .scroll-indicator {
+                bottom: 20px; /* Adjust as needed to avoid clipping */
+                left: 50%; /* Center horizontally */
+                transform: translateX(-50%);
+            }
+
             .nav-links {
                 display: none;
                 position: absolute;
@@ -1944,9 +1993,10 @@
                 left: 31px;
             }
             
+            /* Fix: Timeline dates overlapping text */
             .timeline-item {
                 width: 100%;
-                padding-left: 70px;
+                padding-left: 100px; /* Increased padding to move text right */
                 padding-right: 25px;
             }
             
@@ -2158,8 +2208,7 @@
 <body>
     <div class="pattern-overlay"></div>
 
-    <!-- Navigation -->
-<nav id="main-nav">
+    <nav id="main-nav">
     <div class="nav-container">
         <a href="#" class="logo">
             <i class="fas fa-gopuram logo-icon"></i>
@@ -2186,15 +2235,13 @@
     </div>
 </nav>
 
-    <!-- Hero Section -->
     <section id="hero" class="hero">
         <div class="hero-content">
             <div class="india-flag">
                 <div class="flag-strip saffron-strip"></div>
                 <div class="flag-strip white-strip">
                     <div class="ashoka-chakra">
-                        <!-- Spokes will be added with JS -->
-                    </div>
+                        </div>
                 </div>
                 <div class="flag-strip green-strip"></div>
             </div>
@@ -2218,7 +2265,6 @@
         </div>
     </section>
 
-    <!-- Introduction -->
     <section id="intro" class="section">
         <div class="container">
             <div class="section-title">
@@ -2235,7 +2281,6 @@
         </div>
     </section>
 
-    <!-- Stats Section: India at a Glance -->
     <section id="stats" class="section">
         <div class="container">
             <div class="section-title">
@@ -2301,7 +2346,6 @@
         </div>
     </section>
 
-    <!-- Historical Timeline -->
     <section id="history" class="section">
         <div class="container">
             <div class="section-title">
@@ -2361,8 +2405,7 @@
         </div>
     </section>
 
-        <!-- Contributions Section -->
-    <section id="contributions" class="section">
+        <section id="contributions" class="section">
         <div class="container">
             <div class="section-title">
                 <h2>Indian Contributions to the World</h2>
@@ -2370,7 +2413,6 @@
             </div>
             
             <div class="card-grid">
-                <!-- Card 1 -->
                 <div class="card">
                     <div class="card-img">
                         <img src="https://images.unsplash.com/photo-1706205274497-524be01920e8?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Indian culture">
@@ -2381,7 +2423,6 @@
                     </div>
                 </div>
                 
-                <!-- Card 2 -->
                 <div class="card">
                     <div class="card-img">
                         <img src="https://i.postimg.cc/PTPrqgY0/image.png" alt="Shampoo origin">
@@ -2392,7 +2433,6 @@
                     </div>
                 </div>
                 
-                <!-- Card 3 -->
                 <div class="card">
                     <div class="card-img">
                         <img src="https://images.unsplash.com/photo-1583873743670-6d60e445a7e2?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Yoga">
@@ -2403,7 +2443,6 @@
                     </div>
                 </div>
                 
-                <!-- Card 4 -->
                 <div class="card">
                     <div class="card-img">
                         <img src="https://i.postimg.cc/qkbp0Qgp/image.png" alt="Ayurveda">
@@ -2414,7 +2453,6 @@
                     </div>
                 </div>
                 
-                <!-- Card 5 -->
                 <div class="card">
                     <div class="card-img">
                         <img src="https://images.unsplash.com/photo-1607125516845-fa8a14db083a?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Technology">
@@ -2425,7 +2463,6 @@
                     </div>
                 </div>
                 
-                <!-- Card 6 -->
                 <div class="card">
                     <div class="card-img">
                         <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Mathematics">
@@ -2436,7 +2473,6 @@
                     </div>
                 </div>
                 
-                <!-- Card 7 -->
                 <div class="card">
                     <div class="card-img">
                         <img src="https://i.postimg.cc/kMw0Fg8q/image.png" alt="Linguistics">
@@ -2447,7 +2483,6 @@
                     </div>
                 </div>
                 
-                <!-- Card 8 -->
                 <div class="card">
                     <div class="card-img">
                         <img src="https://images.unsplash.com/photo-1640537122744-8df5577a7031?q=80&w=1901&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Gandhi">
@@ -2458,7 +2493,6 @@
                     </div>
                 </div>
                 
-                <!-- Card 9 -->
                 <div class="card">
                     <div class="card-img">
                         <img src="https://images.unsplash.com/photo-1574934541365-9c12e657bea3?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Architecture">
@@ -2469,7 +2503,6 @@
                     </div>
                 </div>
                 
-                <!-- Card 10 -->
                 <div class="card">
                     <div class="card-img">
                         <img src="https://images.unsplash.com/photo-1619879310659-01e83a8e9d6b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sacred Geometry">
@@ -2480,7 +2513,6 @@
                     </div>
                 </div>
 
-                <!-- Card 11 -->
                 <div class="card">
                     <div class="card-img">
                         <img src="https://i.postimg.cc/HYvKVhCk/image.png" alt="Motifs">
@@ -2494,7 +2526,6 @@
         </div>
     </section>
 
-    <!-- Modern India Section -->
     <section id="modern" class="section">
         <div class="container">
             <div class="section-title">
@@ -2566,8 +2597,7 @@
         </div>
     </section>
 
-        <!-- Religion Section -->
-    <section id="religion" class="section">
+        <section id="religion" class="section">
         <div class="container">
             <div class="section-title">
                 <h2>Religion in India</h2>
@@ -2699,7 +2729,6 @@
         </div>
     </section>
 
-    <!-- Cultural Expression -->
     <section id="culture" class="section">
         <div class="container">
             <div class="section-title">
@@ -2738,8 +2767,7 @@
         </div>
     </section>
 
-        <!-- Cinema Section -->
-    <section id="cinema" class="section">
+        <section id="cinema" class="section">
         <div class="container">
             <div class="section-title">
                 <h2>Cinema: The Diverse World of Indian Films</h2>
@@ -2747,7 +2775,6 @@
             </div>
             
             <div class="card-grid">
-                <!-- Bollywood Card -->
                 <div class="card">
                     <div class="card-img">
                         <img src="https://media.cnn.com/api/v1/images/stellar/prod/230313002454-52-oscars-show-2023.jpg?c=original" alt="Bollywood">
@@ -2760,7 +2787,6 @@
                     </div>
                 </div>
                 
-                <!-- Code-Switching Card -->
                 <div class="card">
                     <div class="card-img">
                         <img src="https://media.timeout.com/images/102136149/750/562/image.jpg" alt="Code-switching in cinema">
@@ -2773,7 +2799,6 @@
                     </div>
                 </div>
                 
-                <!-- Hinglish Card -->
                 <div class="card">
                     <div class="card-img">
                         <img src="https://static.punemirror.com/full/9391a27f-093d-4d20-bc7b-feb8b8a08d26.webp" alt="Hinglish in Bollywood">
@@ -2789,10 +2814,8 @@
         </div>
     </section>
 
-            <!-- Arts Section - Multi-Image Slideshow -->
-    <section id="arts" class="section" style="padding: 0; position: relative;">
+            <section id="arts" class="section" style="padding: 0; position: relative;">
         <div class="arts-slideshow">
-            <!-- Slide 1 -->
             <div class="slide active">
                 <div class="slide-gallery">
                     <div class="gallery-image" style="background-image: url('https://i.postimg.cc/Z0tYTsVJ/image.png');"></div>
@@ -2805,7 +2828,6 @@
                 </div>
             </div>
             
-            <!-- Slide 2 -->
             <div class="slide">
                 <div class="slide-gallery">
                     <div class="gallery-image" style="background-image: url('https://i.postimg.cc/VfmGvFCV/daku.png');"></div>
@@ -2819,7 +2841,6 @@
                 </div>
             </div>
             
-            <!-- Slide 3 -->
             <div class="slide">
                 <div class="slide-gallery">
                     <div class="gallery-image" style="background-image: url('https://i.postimg.cc/WsrcJXdN/image.png');"></div>
@@ -2832,7 +2853,6 @@
                 </div>
             </div>
             
-            <!-- Slide 4 -->
             <div class="slide">
                 <div class="slide-gallery">
                     <div class="gallery-image" style="background-image: url('https://artlogic-res.cloudinary.com/w_2400,h_2400,c_limit,f_auto,fl_lossy,q_auto/artlogicstorage/chempres/images/view/b4b5f544b1500108d56e852c8c199e31j/chemouldprescottroad-shilpa-gupta-for-in-your-tongue-i-cannot-fit-2017-2018.jpg');"></div>
@@ -2845,7 +2865,6 @@
                 </div>
             </div>
             
-            <!-- Navigation and Controls -->
             <div class="slideshow-nav">
                 <button class="nav-dot active" data-slide="0"></button>
                 <button class="nav-dot" data-slide="1"></button>
@@ -2874,8 +2893,7 @@
         </div>
     </section>
 
-    <!-- Indian Music Section - Immersive Redesign -->
-<section id="music" class="music-section">
+    <section id="music" class="music-section">
     <div class="music-header">
         <div class="container">
             <h2>Indian Music: A Global Harmony</h2>
@@ -2890,7 +2908,6 @@
         </div>
     </div>
 
-    <!-- Classical Fusion Section -->
     <div class="music-panel classical-panel">
         <div class="container panel-container">
             <div class="panel-content">
@@ -2945,7 +2962,6 @@
         </div>
     </div>
 
-    <!-- Contemporary Fusion Section -->
     <div class="music-panel contemporary-panel">
         <div class="container panel-container">
             <div class="panel-visual">
@@ -3001,7 +3017,6 @@
         </div>
     </div>
 
-    <!-- Playlist CTA -->
     <div class="music-cta">
         <div class="container">
             <h3>Experience the Fusion</h3>
@@ -3014,9 +3029,7 @@
     </div>
 </section>
 
-   <!-- Indian Cuisine Section -->
-<section id="cuisine" class="cuisine-section">
-    <!-- Sensory Header -->
+   <section id="cuisine" class="cuisine-section">
     <div class="cuisine-header">
         <div class="spice-overlay"></div>
         <div class="container">
@@ -3032,7 +3045,6 @@
         </div>
     </div>
 
-    <!-- Interactive Map -->
     <div class="map-container">
         <div class="container">
             <h3>Regional Flavors of India</h3>
@@ -3069,7 +3081,6 @@
         </div>
     </div>
 
-    <!-- Spice Experience -->
     <div class="spice-experience">
         <div class="container">
             <h3>The Spice Pantry</h3>
@@ -3120,11 +3131,21 @@
                         </div>
                     </div>
                 </div>
+                <div class="spice-card" data-spice="chilli">
+                    <div class="spice-jar">
+                        <div class="spice-powder" style="background-color: #CC0000;"></div>
+                        <div class="spice-label">Chilli</div>
+                        <div class="spice-details">
+                            <h4>Chilli</h4>
+                            <p>Pungent • Hot • Fiery</p>
+                            <p>Used fresh, dried, or powdered to add heat and flavor to almost all Indian dishes.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Dish Gallery -->
     <div class="dish-gallery">
         <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1727280376746-b89107a5b0df?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
             <div class="dish-info">
@@ -3152,7 +3173,6 @@
         </div>
     </div>
 
-    <!-- Second Dish Gallery Row -->
     <div class="dish-gallery">
         <div class="gallery-item" style="background-image: url('https://spicebreeze.com/wp-content/uploads/2022/02/Indian-Samosas-sq.jpg');">
             <div class="dish-info">
@@ -3180,7 +3200,6 @@
         </div>
     </div>
 
-    <!-- Language Influence -->
     <div class="language-influence">
         <div class="container">
             <h3>Culinary Words in English</h3>
@@ -3201,20 +3220,17 @@
         </div>
     </div>
 
-    <!-- Final CTA -->
     <div class="cuisine-cta">
         <div class="container">
-            <h3>Ready to Taste India?</h3>
-            <p>Visit our food stand to experience authentic flavors and cooking demonstrations</p>
+            <h3>Ready for a Taste of India?</h3>
+            <p>Visit our food stand to experience authentic smells and demonstrations</p>
             <a href="#contact" class="cta-button">Find Our Food Stall</a>
         </div>
     </div>
 </section>
 
-<!-- Footer -->
 <footer class="footer">
     <div class="footer-container">
-        <!-- Quick Links Row -->
         <div class="quick-links-row">
             <li><a href="#intro" class="footer-link">| Introduction </a>
                     <a href="#stats" class="footer-link">| India at a Glance </a>
@@ -3229,9 +3245,7 @@
                     <a href="#cuisine" class="footer-link">| Cuisine </a>
         </div>
 
-        <!-- Main Footer Content -->
         <div class="footer-content">
-            <!-- Left Section - Logo and Info -->
             <div class="footer-info">
                 <div class="footer-logo">
                     <i class="fas fa-gopuram"></i>
@@ -3239,19 +3253,16 @@
                 </div>
                 <div class="copyright">
                     <p>© 2025 English Cultural Fair — Kachru Model Exhibition</p>
-                    <p>UFS — DLES Inglês | Content Development by Brandon | All Rights Reserved</p>
+                    <p>UFS — DLES Inglês | All Rights Reserved</p>
                 </div>
             </div>
 
-            <!-- Right Section - Social Links -->
             <div class="social-links">
-                <!-- Course Instagram -->
                 <a href="https://instagram.com/colegiado_inglesufs/" class="social-btn instagram-btn" target="_blank">
                     <i class="fab fa-instagram"></i>
                     <span>Course Profile</span>
                 </a>
                 
-                <!-- University Portal -->
                 <a href="https://www.ufs.br/" class="social-btn university-btn" target="_blank">
                     <img src="https://www.ufs.br/assets/ufs_logo-a0944b5a183b86aa53a3c556a603a228923f651bb4bd847c10086600a43cbda7.png" alt="University Logo" class="university-logo">
                     <span>University Portal</span>
@@ -3259,14 +3270,13 @@
             </div>
         </div>
 
-        <!-- Team Links -->
         <div class="team-links">
             <span>Team:</span>
-            <a href="https://instagram.com/b.kawo/" target="_blank">Brandon</a>
-            <a href="https://instagram.com/erikbzra/" target="_blank">Erik</a>
-            <a href="https://instagram.com/jessicalmeidas_/" target="_blank">Jéssica</a>
-            <a href="https://instagram.com/karollinebbz/" target="_blank">Karolline</a>
-            <a href="https://instagram.com/silvaa.raffa.15/" target="_blank">Rafael</a>
+            <a href="https://instagram.com/b.kawo/" target="_blank">Dev & History: Brandon |</a>
+            <a href="https://instagram.com/erikbzra/" target="_blank"> Arts & Music: Erik |</a>
+            <a href="https://instagram.com/jessicalmeidas_/" target="_blank"> Cinema: Jéssica |</a>
+            <a href="https://instagram.com/karollinebbz/" target="_blank"> Arts & Architecture: Karolline |</a>
+            <a href="https://instagram.com/silvaa.raffa.15/" target="_blank"> Cuisine: Rafael</a>
         </div>
     </div>
 </footer>
